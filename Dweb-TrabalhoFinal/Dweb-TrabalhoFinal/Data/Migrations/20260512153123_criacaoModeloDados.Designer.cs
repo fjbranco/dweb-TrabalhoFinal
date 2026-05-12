@@ -4,6 +4,7 @@ using Dweb_TrabalhoFinal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dweb_TrabalhoFinal.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260512153123_criacaoModeloDados")]
+    partial class criacaoModeloDados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,7 +301,7 @@ namespace Dweb_TrabalhoFinal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Cliente");
                 });
 
             modelBuilder.Entity("ModeloDados.Models.Filme", b =>
@@ -349,7 +352,7 @@ namespace Dweb_TrabalhoFinal.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Generos");
+                    b.ToTable("Genero");
                 });
 
             modelBuilder.Entity("ModeloDados.Models.Sala", b =>
@@ -420,7 +423,7 @@ namespace Dweb_TrabalhoFinal.Data.Migrations
 
                     b.HasIndex("SalaSessaoId");
 
-                    b.ToTable("Sessoes");
+                    b.ToTable("Sessao");
                 });
 
             modelBuilder.Entity("FilmeGenero", b =>
