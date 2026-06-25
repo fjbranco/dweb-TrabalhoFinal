@@ -1,4 +1,5 @@
 using Dweb_TrabalhoFinal.Data;
+using Dweb_TrabalhoFinal.Data.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
+    // Usar os métodos de seed
+    app.UseItToSeedSqlServer();
 }
 else
 {
