@@ -51,7 +51,8 @@ namespace Dweb_TrabalhoFinal.Data.Seed {
                 clientes = [
                     new Cliente { Nome="João Mendes", Email="jmendeste@exemplo.com", NIF="123456789", Telemovel="919876543" },
                     new Cliente { Nome="Maria Sousa", Email="msousa@exemplo.com", NIF="123459876", Telemovel="912345678" },
-                    new Cliente { Nome="Ana Paula Silva", Email="apsilva@exemplo.com", NIF="123459867", Telemovel="935678921"  }
+                    new Cliente { Nome="Ana Paula Silva", Email="apsilva@exemplo.com", NIF="123459867", Telemovel="935678921"  },
+                    new Cliente { Nome="Carlos Pereira", Email="cpereira@exemplo.com", NIF="123459856", Telemovel="934567892" }
                 ];
                 await dbContext.Clientes.AddRangeAsync(clientes);
                 haAdicao = true;
@@ -70,32 +71,33 @@ namespace Dweb_TrabalhoFinal.Data.Seed {
                 haAdicao = true;
             }
 
-
-            // Se não houver bilhetes, cria-os
-            var bilhetes = Array.Empty<Bilhete>();
-            if (!dbContext.Bilhetes.Any()) {
-                bilhetes = [
-                    new Bilhete { DataCompra = DateTime.Now, SessaoFK = 1, ClienteFK = 1 },
-                    new Bilhete { DataCompra = DateTime.Now, SessaoFK = 2, ClienteFK = 2 },
-                    new Bilhete { DataCompra = DateTime.Now, SessaoFK = 3, ClienteFK = 3 }
-                ];
-                await dbContext.Bilhetes.AddRangeAsync(bilhetes);
-                haAdicao = true;
-            }
-
             // Se não houver sessões, cria-as
             var sessoes = Array.Empty<Sessao>();
             if (!dbContext.Sessoes.Any()) {
                 sessoes = [
-                    new Sessao { DataSessao = DateTime.Parse("2026-06-26"), HoraSessao = DateTime.Parse("19:00"), Preco = 10.00m, FilmeFK = 1, SalaFK = 1 },
-                    new Sessao { DataSessao = DateTime.Parse("2026-07-27"), HoraSessao = DateTime.Parse("21:00"), Preco = 12.00m, FilmeFK = 2, SalaFK = 2 },
-                    new Sessao { DataSessao = DateTime.Parse("2026-07-28"), HoraSessao = DateTime.Parse("23:00"), Preco = 15.00m, FilmeFK = 3, SalaFK = 3 }
+                    new Sessao { DataSessao = DateTime.Parse("2026-06-26"), HoraSessao = DateTime.Parse("19:00"), Preco = 10.00m, FilmeSessao = filmes[0], SalaSessao = salas[0] },
+                    new Sessao { DataSessao = DateTime.Parse("2026-07-27"), HoraSessao = DateTime.Parse("21:00"), Preco = 12.00m, FilmeSessao = filmes[1], SalaSessao = salas[1] },
+                    new Sessao { DataSessao = DateTime.Parse("2026-07-28"), HoraSessao = DateTime.Parse("23:00"), Preco = 15.00m, FilmeSessao = filmes[2], SalaSessao = salas[2] },
+                    new Sessao { DataSessao = DateTime.Parse("2026-07-29"), HoraSessao = DateTime.Parse("20:00"), Preco = 11.00m, FilmeSessao = filmes[3], SalaSessao = salas[0] }
                 ];
                 await dbContext.Sessoes.AddRangeAsync(sessoes);
                 haAdicao = true;
             }
 
 
+            // Se não houver bilhetes, cria-os
+            var bilhetes = Array.Empty<Bilhete>();
+            if (!dbContext.Bilhetes.Any()) {
+                bilhetes = [
+                    new Bilhete { DataCompra = DateTime.Parse("2026-06-23"), SessaoBilhete = sessoes[1], ClienteBilhete = clientes[1] },
+                    new Bilhete { DataCompra = DateTime.Parse("2026-06-24"), SessaoBilhete = sessoes[2], ClienteBilhete = clientes[2] },
+                    new Bilhete { DataCompra = DateTime.Parse("2026-06-25"), SessaoBilhete = sessoes[3], ClienteBilhete = clientes[3] }
+                ];
+                await dbContext.Bilhetes.AddRangeAsync(bilhetes);
+                haAdicao = true;
+            }
+
+            
             try
             {
                 if (haAdicao)
