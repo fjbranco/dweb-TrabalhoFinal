@@ -79,6 +79,34 @@ namespace Dweb_TrabalhoFinal.Data.Seed {
 
                 throw;
             }
+            // Se não houver bilhetes, cria-os
+            var bilhetes = Array.Empty<Bilhete>();
+            if (!dbContext.Salas.Any())
+            {
+                bilhetes = [
+                    new Bilhete { DataCompra = "18/07/2026" , SessaoFK="",   SessaoBilhete="",ClienteFK="", ClienteBilhete="" },
+                    new  Bilhete { DataCompra = "22/07/2026" , SessaoFK="",   SessaoBilhete="",ClienteFK="", ClienteBilhete="" },
+                    new  Bilhete{ DataCompra = "24/07/2026" , SessaoFK="",   SessaoBilhete="",ClienteFK="", ClienteBilhete="" }
+                ];
+                await dbContext.Salas.AddRangeAsync(salas);
+                haAdicao = true;
+            }
+
+
+            try
+            {
+                if (haAdicao)
+                {
+                    // tornar persistentes os dados
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
     }
 }
