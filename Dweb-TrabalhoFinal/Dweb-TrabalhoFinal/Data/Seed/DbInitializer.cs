@@ -1,4 +1,5 @@
 ﻿using ModeloDados.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dweb_TrabalhoFinal.Data.Seed {
     internal class DbInitializer {
@@ -70,25 +71,27 @@ namespace Dweb_TrabalhoFinal.Data.Seed {
             }
 
 
-            try {
-                if (haAdicao) {
-                    // tornar persistentes os dados
-                    dbContext.SaveChanges();
-                }
-            } catch (Exception ex) {
-
-                throw;
-            }
             // Se não houver bilhetes, cria-os
             var bilhetes = Array.Empty<Bilhete>();
-            if (!dbContext.Salas.Any())
-            {
+            if (!dbContext.Bilhetes.Any()) {
                 bilhetes = [
-                    new Bilhete { DataCompra = "18/07/2026" , SessaoFK="",   SessaoBilhete="",ClienteFK="", ClienteBilhete="" },
-                    new  Bilhete { DataCompra = "22/07/2026" , SessaoFK="",   SessaoBilhete="",ClienteFK="", ClienteBilhete="" },
-                    new  Bilhete{ DataCompra = "24/07/2026" , SessaoFK="",   SessaoBilhete="",ClienteFK="", ClienteBilhete="" }
+                    new Bilhete { DataCompra = DateTime.Now, SessaoFK = 1, ClienteFK = 1 },
+                    new Bilhete { DataCompra = DateTime.Now, SessaoFK = 2, ClienteFK = 2 },
+                    new Bilhete { DataCompra = DateTime.Now, SessaoFK = 3, ClienteFK = 3 }
                 ];
-                await dbContext.Salas.AddRangeAsync(salas);
+                await dbContext.Bilhetes.AddRangeAsync(bilhetes);
+                haAdicao = true;
+            }
+
+            // Se não houver sessões, cria-as
+            var sessoes = Array.Empty<Sessao>();
+            if (!dbContext.Sessoes.Any()) {
+                sessoes = [
+                    new Sessao { DataSessao = DateTime.Parse("2026-06-26"), HoraSessao = DateTime.Parse("19:00"), Preco = 10.00m, FilmeFK = 1, SalaFK = 1 },
+                    new Sessao { DataSessao = DateTime.Parse("2026-07-27"), HoraSessao = DateTime.Parse("21:00"), Preco = 12.00m, FilmeFK = 2, SalaFK = 2 },
+                    new Sessao { DataSessao = DateTime.Parse("2026-07-28"), HoraSessao = DateTime.Parse("23:00"), Preco = 15.00m, FilmeFK = 3, SalaFK = 3 }
+                ];
+                await dbContext.Sessoes.AddRangeAsync(sessoes);
                 haAdicao = true;
             }
 
