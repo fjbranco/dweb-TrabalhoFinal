@@ -2,6 +2,9 @@ using Dweb_TrabalhoFinal.Data;
 using Dweb_TrabalhoFinal.Data.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
+using System.Reflection;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,22 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "API de Venda de Bilhetes Online",
+        Version = "v1",
+        Description = "API para gestão de filmes"
+    });
+
+    /*  // Caminho para o XML gerado
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
+        c.IncludeXmlComments(xmlPath);
+    */
+
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +43,10 @@ if (app.Environment.IsDevelopment())
 
     // Usar os métodos de seed
     app.UseItToSeedSqlServer();
+
+    // iniciar o 'middleware' do Swagger
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
