@@ -9,7 +9,7 @@ namespace ModeloDados.Models {
         public int Id { get; set; }
 
         /// <summary>
-        /// Nome da Sala
+        /// o nome ou numero da sala é obrigatorio
         /// </summary>
         public String Nome { get; set; }
 
