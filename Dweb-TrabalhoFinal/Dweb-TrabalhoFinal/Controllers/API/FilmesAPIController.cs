@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModeloDados.Models;
 using Dweb_TrabalhoFinal.Data;
+using Dweb_TrabalhoFinal.Models.ViewModels;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -19,9 +20,15 @@ public class FilmesAPIController : ControllerBase
 
     // GET: api/Filme
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Filme>>> GetFilme()
+    public async Task<ActionResult<IEnumerable<FilmesDTO>>> GetFilme()
     {
-        return await _context.Filmes.ToListAsync();
+        //return await _context.Filmes.ToListAsync();
+        return await _context.Filmes
+                              .Select(c => new FilmesDTO {
+                                  Id = c.Id,
+                                  Titulo = c.Titulo
+                              })
+                              .ToListAsync();
     }
 
     // GET: api/Filme/5
