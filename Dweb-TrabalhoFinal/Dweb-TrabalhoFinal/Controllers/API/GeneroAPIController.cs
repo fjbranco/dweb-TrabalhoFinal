@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
+using Dweb_TrabalhoFinal.Models.ViewModels;
 
 namespace Dweb_TrabalhoFinal.Controllers.API
 {
@@ -23,9 +24,14 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/GeneroAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Genero>>> GetGeneros()
+        public async Task<ActionResult<IEnumerable<GenerosDTO>>> GetGeneros()
         {
-            return await _context.Generos.ToListAsync();
+            return await _context.Generos
+                                  .Select(c => new GenerosDTO {
+                                      Id = c.Id,
+                                      NomeGenero = c.NomeGenero
+                                  })
+                                  .ToListAsync();
         }
 
         // GET: api/GeneroAPI/5
