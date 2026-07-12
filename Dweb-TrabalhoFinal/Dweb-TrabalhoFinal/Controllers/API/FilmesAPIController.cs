@@ -26,7 +26,8 @@ public class FilmesAPIController : ControllerBase
         return await _context.Filmes
                               .Select(c => new FilmesDTO {
                                   Id = c.Id,
-                                  Titulo = c.Titulo
+                                  Titulo = c.Titulo,
+                                  Ano = c.Ano
                               })
                               .ToListAsync();
     }
