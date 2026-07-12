@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
+using Dweb_TrabalhoFinal.Models.ViewModels;
 
 namespace Dweb_TrabalhoFinal.Controllers.API
 {
@@ -23,9 +24,14 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/BilhetesAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Bilhete>>> GetBilhetes()
+        public async Task<ActionResult<IEnumerable<BilhetesDTO>>> GetBilhetes()
         {
-            return await _context.Bilhetes.ToListAsync();
+            return await _context.Bilhetes
+                                  .Select(c => new BilhetesDTO {
+                                      Id = c.Id,
+                                      DataCompra = c.DataCompra
+                                  })
+                                  .ToListAsync();
         }
 
         // GET: api/BilhetesAPI/5
