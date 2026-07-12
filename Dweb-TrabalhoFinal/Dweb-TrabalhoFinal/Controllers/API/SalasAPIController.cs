@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
+using Dweb_TrabalhoFinal.Models.ViewModels;
 
 namespace Dweb_TrabalhoFinal.Controllers.API
 {
@@ -23,9 +24,15 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/SalasAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sala>>> GetSalas()
+        public async Task<ActionResult<IEnumerable<SalasDTO>>> GetSalas()
         {
-            return await _context.Salas.ToListAsync();
+            return await _context.Salas
+                                  .Select(s => new SalasDTO {
+                                      Id = s.Id,
+                                      Nome = s.Nome,
+                                      Localidade = s.Localidade
+                                  })
+                                  .ToListAsync();
         }
 
         // GET: api/SalasAPI/5
