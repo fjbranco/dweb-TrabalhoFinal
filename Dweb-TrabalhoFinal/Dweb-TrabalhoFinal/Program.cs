@@ -46,7 +46,7 @@ builder.Services.AddSwaggerGen(c => {
 // *******************************************************************
 // JWT Settings
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
 builder.Services.AddAuthentication(options => { })
    .AddCookie("Cookies", options => {
@@ -67,7 +67,7 @@ builder.Services.AddAuthentication(options => { })
 
 
 // configuração do JWT
-builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<Dweb_TrabalhoFinal.Tools.TokenService>();
 
 
 var app = builder.Build();
