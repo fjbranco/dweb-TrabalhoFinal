@@ -8,6 +8,7 @@ using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
+using Dweb_TrabalhoFinal.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
 
