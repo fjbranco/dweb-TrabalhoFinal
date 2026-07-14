@@ -34,9 +34,15 @@ public class FilmesAPIController : ControllerBase
 
     // GET: api/Filme/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Filme>> GetFilme(int id)
+    public async Task<ActionResult<FilmesSimplerDTO>> GetFilme(int id)
     {
-        var filme = await _context.Filmes.FindAsync(id);
+        var filme = await _context.Filmes
+                                      .Where(c => c.Id == id)
+                                      .Select(c => new FilmesSimplerDTO {
+                                          Titulo = c.Titulo,
+                                          Ano = c.Ano
+                                      })
+                                      .FirstOrDefaultAsync();
 
         if (filme == null)
         {
