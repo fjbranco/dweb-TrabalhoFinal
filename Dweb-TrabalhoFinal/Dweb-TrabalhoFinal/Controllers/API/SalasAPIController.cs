@@ -37,9 +37,15 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/SalasAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Sala>> GetSala(int id)
+        public async Task<ActionResult<SalasSimplerDTO>> GetSala(int id)
         {
-            var sala = await _context.Salas.FindAsync(id);
+            var sala = await _context.Salas
+                                     .Where(s => s.Id == id)
+                                     .Select(s => new SalasSimplerDTO {
+                                         Nome = s.Nome,
+                                         Localidade = s.Localidade
+                                     })
+                                     .FirstOrDefaultAsync();
 
             if (sala == null)
             {
