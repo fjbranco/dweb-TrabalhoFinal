@@ -36,9 +36,14 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/BilhetesAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Bilhete>> GetBilhete(int id)
+        public async Task<ActionResult<BilhetesSimplerDTO>> GetBilhete(int id)
         {
-            var bilhete = await _context.Bilhetes.FindAsync(id);
+            var bilhete = await _context.Bilhetes
+                                        .Where(c => c.Id == id)
+                                        .Select(c => new BilhetesSimplerDTO {
+                                            DataCompra = c.DataCompra
+                                        })
+                                        .FirstOrDefaultAsync();
 
             if (bilhete == null)
             {
