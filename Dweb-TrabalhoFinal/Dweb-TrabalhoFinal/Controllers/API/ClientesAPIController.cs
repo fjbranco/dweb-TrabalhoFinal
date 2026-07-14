@@ -36,9 +36,14 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/ClientesAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<ClientesSimplerDTO>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Clientes
+                                         .Where(c => c.Id == id)
+                                         .Select(c => new ClientesSimplerDTO {
+                                             Nome = c.Nome
+                                         })
+                                         .FirstOrDefaultAsync();
 
             if (cliente == null)
             {
