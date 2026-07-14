@@ -59,36 +59,36 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return sessao;
         }
 
-        // PUT: api/SessaoAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSessao(int id, Sessao sessao)
-        {
-            if (id != sessao.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/SessaoAPI/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutSessao(int id, Sessao sessao)
+        //{
+        //    if (id != sessao.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(sessao).State = EntityState.Modified;
+        //    _context.Entry(sessao).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SessaoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!SessaoExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/SessaoAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -101,21 +101,21 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return CreatedAtAction("GetSessao", new { id = sessao.Id }, sessao);
         }
 
-        // DELETE: api/SessaoAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSessao(int id)
-        {
-            var sessao = await _context.Sessoes.FindAsync(id);
-            if (sessao == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/SessaoAPI/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteSessao(int id)
+        //{
+        //    var sessao = await _context.Sessoes.FindAsync(id);
+        //    if (sessao == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Sessoes.Remove(sessao);
-            await _context.SaveChangesAsync();
+        //    _context.Sessoes.Remove(sessao);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool SessaoExists(int id)
         {

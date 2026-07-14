@@ -53,36 +53,36 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return cliente;
         }
 
-        // PUT: api/ClientesAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
-        {
-            if (id != cliente.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/ClientesAPI/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        //{
+        //    if (id != cliente.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+        //    _context.Entry(cliente).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ClienteExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/ClientesAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -95,21 +95,21 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
         }
 
-        // DELETE: api/ClientesAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(int id)
-        {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/ClientesAPI/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteCliente(int id)
+        //{
+        //    var cliente = await _context.Clientes.FindAsync(id);
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Clientes.Remove(cliente);
-            await _context.SaveChangesAsync();
+        //    _context.Clientes.Remove(cliente);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool ClienteExists(int id)
         {

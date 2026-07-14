@@ -53,36 +53,36 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return genero;
         }
 
-        // PUT: api/GeneroAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGenero(int id, Genero genero)
-        {
-            if (id != genero.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/GeneroAPI/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutGenero(int id, Genero genero)
+        //{
+        //    if (id != genero.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(genero).State = EntityState.Modified;
+        //    _context.Entry(genero).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GeneroExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!GeneroExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/GeneroAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -95,21 +95,21 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return CreatedAtAction("GetGenero", new { id = genero.Id }, genero);
         }
 
-        // DELETE: api/GeneroAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGenero(int id)
-        {
-            var genero = await _context.Generos.FindAsync(id);
-            if (genero == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/GeneroAPI/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteGenero(int id)
+        //{
+        //    var genero = await _context.Generos.FindAsync(id);
+        //    if (genero == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Generos.Remove(genero);
-            await _context.SaveChangesAsync();
+        //    _context.Generos.Remove(genero);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool GeneroExists(int id)
         {

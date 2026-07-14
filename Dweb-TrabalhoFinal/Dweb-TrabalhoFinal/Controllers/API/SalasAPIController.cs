@@ -55,36 +55,36 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return sala;
         }
 
-        // PUT: api/SalasAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSala(int id, Sala sala)
-        {
-            if (id != sala.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/SalasAPI/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutSala(int id, Sala sala)
+        //{
+        //    if (id != sala.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(sala).State = EntityState.Modified;
+        //    _context.Entry(sala).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SalaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!SalaExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/SalasAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -97,21 +97,21 @@ namespace Dweb_TrabalhoFinal.Controllers.API
             return CreatedAtAction("GetSala", new { id = sala.Id }, sala);
         }
 
-        // DELETE: api/SalasAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSala(int id)
-        {
-            var sala = await _context.Salas.FindAsync(id);
-            if (sala == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/SalasAPI/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteSala(int id)
+        //{
+        //    var sala = await _context.Salas.FindAsync(id);
+        //    if (sala == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Salas.Remove(sala);
-            await _context.SaveChangesAsync();
+        //    _context.Salas.Remove(sala);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         private bool SalaExists(int id)
         {
