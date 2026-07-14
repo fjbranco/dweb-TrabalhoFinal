@@ -36,9 +36,14 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/GeneroAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Genero>> GetGenero(int id)
+        public async Task<ActionResult<GenerosSimplerDTO>> GetGenero(int id)
         {
-            var genero = await _context.Generos.FindAsync(id);
+            var genero = await _context.Generos
+                                        .Where(c => c.Id == id)
+                                        .Select(c => new GenerosSimplerDTO {
+                                            NomeGenero = c.NomeGenero
+                                        })
+                                        .FirstOrDefaultAsync();
 
             if (genero == null)
             {
