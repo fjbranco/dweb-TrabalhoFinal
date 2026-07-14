@@ -1,11 +1,13 @@
+using Dweb_TrabalhoFinal.Data;
+using Dweb_TrabalhoFinal.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModeloDados.Models;
-using Dweb_TrabalhoFinal.Data;
-using Dweb_TrabalhoFinal.Models.ViewModels;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class FilmesAPIController : ControllerBase
 {
 
@@ -86,10 +88,19 @@ public class FilmesAPIController : ControllerBase
     // POST: api/Filme
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Filme>> PostFilme(Filme filme)
+    public async Task<ActionResult<FilmesSimplerDTO>> PostFilme(FilmesSimplerDTO nomeDoFilme)
     {
-        _context.Filmes.Add(filme);
-        await _context.SaveChangesAsync();
+        Filme filme = new() 
+        {
+            Titulo = nomeDoFilme.Titulo,
+            Ano = nomeDoFilme.Ano
+        };
+        try {
+            _context.Filmes.Add(filme);
+            await _context.SaveChangesAsync();
+        } catch (Exception) {
+            return BadRequest();
+        }
 
         return CreatedAtAction("GetFilme", new { id = filme.Id }, filme);
     }

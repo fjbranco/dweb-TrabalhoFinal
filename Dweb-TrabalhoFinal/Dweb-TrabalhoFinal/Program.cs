@@ -2,9 +2,12 @@ using Dweb_TrabalhoFinal.Data;
 using Dweb_TrabalhoFinal.Data.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.WSIdentity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +36,38 @@ builder.Services.AddSwaggerGen(c => {
     */
 
 });
+
+// *******************************************************************
+// Instalar o package
+// Microsoft.AspNetCore.Authentication.JwtBearer
+//
+// using Microsoft.IdentityModel.Tokens;
+// *******************************************************************
+// JWT Settings
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+
+builder.Services.AddAuthentication(options => { })
+   .AddCookie("Cookies", options => {
+       options.LoginPath = "/Identity/Account/Login";
+       options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+   })
+   .AddJwtBearer("Bearer", options => {
+       options.TokenValidationParameters = new TokenValidationParameters {
+           ValidateIssuer = true,
+           ValidateAudience = true,
+           ValidateLifetime = true,
+           ValidateIssuerSigningKey = true,
+           ValidIssuer = jwtSettings["Issuer"],
+           ValidAudience = jwtSettings["Audience"],
+           IssuerSigningKey = new SymmetricSecurityKey(key)
+       };
+   });
+
+
+// configuração do JWT
+builder.Services.AddScoped<TokenService>();
+
 
 var app = builder.Build();
 
