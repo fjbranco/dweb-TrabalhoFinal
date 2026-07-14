@@ -1,5 +1,7 @@
 using Dweb_TrabalhoFinal.Data;
 using Dweb_TrabalhoFinal.Data.Seed;
+using Dweb_TrabalhoFinal.Tools;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 // using Microsoft.IdentityModel.Protocols.WSIdentity;
@@ -8,7 +10,8 @@ using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
-using Dweb_TrabalhoFinal.Tools;
+
+// using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +51,7 @@ builder.Services.AddSwaggerGen(c => {
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
+// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthentication(options => { })
    .AddCookie("Cookies", options => {
        options.LoginPath = "/Identity/Account/Login";
