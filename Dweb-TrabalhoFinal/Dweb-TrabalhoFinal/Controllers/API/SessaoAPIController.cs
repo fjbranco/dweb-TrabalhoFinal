@@ -40,9 +40,16 @@ namespace Dweb_TrabalhoFinal.Controllers.API
 
         // GET: api/SessaoAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Sessao>> GetSessao(int id)
+        public async Task<ActionResult<SessoesSimplerDTO>> GetSessao(int id)
         {
-            var sessao = await _context.Sessoes.FindAsync(id);
+            var sessao = await _context.Sessoes
+                                      .Where(c => c.Id == id)
+                                      .Select(c => new SessoesSimplerDTO {
+                                          DataSessao = c.DataSessao,
+                                          HoraSessao = c.HoraSessao,
+                                          Preco = (int)c.Preco
+                                      })
+                                      .FirstOrDefaultAsync();
 
             if (sessao == null)
             {
