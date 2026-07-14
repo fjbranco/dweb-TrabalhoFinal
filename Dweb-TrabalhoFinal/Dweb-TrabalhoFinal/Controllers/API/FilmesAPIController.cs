@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModeloDados.Models;
 
+
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class FilmesAPIController : ControllerBase
 {
 

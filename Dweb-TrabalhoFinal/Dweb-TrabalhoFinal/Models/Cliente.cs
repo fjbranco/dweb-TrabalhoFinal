@@ -43,5 +43,15 @@ namespace ModeloDados.Models
         /// Lista de bilhetes do cliente
         /// </summary>
         public ICollection<Bilhete> BilhetesCliente { get; set; } = new List<Bilhete>();
+
+
+        /// <summary>
+        /// atributo para 'ligar' o MyUser com o IdentityUser, 
+        /// ou seja, com os dados de autenticação do utilizador.
+        /// Neste caso, vamos usar o UserName do IdentityUser 
+        /// para através dele identificarmos as compras da pessoa autenticada
+        /// </summary>
+        [StringLength(50)]
+        public string UserName { get; set; } = "";
     }
 }

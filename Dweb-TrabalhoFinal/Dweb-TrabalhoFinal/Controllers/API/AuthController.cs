@@ -11,7 +11,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+
+
 namespace Dweb_TrabalhoFinal.Controllers.API {
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;

@@ -2,7 +2,7 @@ using Dweb_TrabalhoFinal.Data;
 using Dweb_TrabalhoFinal.Data.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols.WSIdentity;
+// using Microsoft.IdentityModel.Protocols.WSIdentity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -94,9 +94,13 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication(); // Adiciona a autenticação ao pipeline de middleware
+
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapControllers();   // Mapear os controladores da API
 
 app.MapControllerRoute(
     name: "default",
