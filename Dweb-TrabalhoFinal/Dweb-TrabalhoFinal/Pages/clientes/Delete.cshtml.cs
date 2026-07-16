@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
 
-namespace Dweb_TrabalhoFinal.Pages.clientes
+namespace Dweb_TrabalhoFinal.Pages.Clientes
 {
     public class DeleteModel : PageModel
     {
