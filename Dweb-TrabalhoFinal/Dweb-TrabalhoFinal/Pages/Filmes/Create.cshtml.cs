@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ModeloDados.Models;
 using Dweb_TrabalhoFinal.Data;
 
-namespace Dweb-TrabalhoFinal.Pages.FilmePages;
+namespace Dweb_TrabalhoFinal.Pages.Filmes;
 
 public class CreateModel : PageModel
 {
