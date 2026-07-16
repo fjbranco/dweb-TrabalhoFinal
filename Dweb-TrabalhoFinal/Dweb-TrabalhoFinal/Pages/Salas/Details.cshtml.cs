@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ModeloDados.Models;
 using Dweb_TrabalhoFinal.Data;
 
-namespace Dweb-TrabalhoFinal.Pages.SalaPages;
+namespace Dweb_TrabalhoFinal.Pages.Salas;
 
 public class DetailsModel : PageModel
 {
