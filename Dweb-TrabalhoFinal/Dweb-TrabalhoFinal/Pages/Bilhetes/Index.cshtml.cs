@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ModeloDados.Models;
 using Dweb_TrabalhoFinal.Data;
 
-namespace Dweb-TrabalhoFinal.Pages.BilhetePages;
+namespace Dweb_TrabalhoFinal.Pages.Bilhetes;
 
 public class IndexModel : PageModel
 {
