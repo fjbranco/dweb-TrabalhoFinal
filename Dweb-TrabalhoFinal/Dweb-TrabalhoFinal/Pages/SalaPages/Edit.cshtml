@@ -1,0 +1,60 @@
+@page
+@model Dweb-TrabalhoFinal.Pages.SalaPages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Sala</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Sala.Id" />
+            <div class="form-group">
+                <label asp-for="Sala.Nome" class="control-label"></label>
+                <input asp-for="Sala.Nome" class="form-control" />
+                <span asp-validation-for="Sala.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala.Capacidade" class="control-label"></label>
+                <input asp-for="Sala.Capacidade" class="form-control" />
+                <span asp-validation-for="Sala.Capacidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala.Localidade" class="control-label"></label>
+                <input asp-for="Sala.Localidade" class="form-control" />
+                <span asp-validation-for="Sala.Localidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala.Morada" class="control-label"></label>
+                <input asp-for="Sala.Morada" class="form-control" />
+                <span asp-validation-for="Sala.Morada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala.CodigoPostal" class="control-label"></label>
+                <input asp-for="Sala.CodigoPostal" class="form-control" />
+                <span asp-validation-for="Sala.CodigoPostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala.SessaoSala" class="control-label"></label>
+                <input asp-for="Sala.SessaoSala" class="form-control" />
+                <span asp-validation-for="Sala.SessaoSala" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
