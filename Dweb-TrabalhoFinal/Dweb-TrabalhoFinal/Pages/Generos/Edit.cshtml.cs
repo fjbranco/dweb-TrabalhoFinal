@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
 
-namespace Dweb_TrabalhoFinal.Pages.Genero
+namespace Dweb_TrabalhoFinal.Pages.Generos
 {
     public class EditModel : PageModel
     {

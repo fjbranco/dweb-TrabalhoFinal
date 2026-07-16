@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
 
-namespace Dweb_TrabalhoFinal.Pages.Genero
+namespace Dweb_TrabalhoFinal.Pages.Generos
 {
     public class CreateModel : PageModel
     {
