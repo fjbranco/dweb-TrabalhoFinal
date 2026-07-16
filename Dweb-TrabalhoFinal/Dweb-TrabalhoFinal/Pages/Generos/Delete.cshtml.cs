@@ -8,17 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
 
-namespace Dweb_TrabalhoFinal.Pages.Genero
+namespace Dweb_TrabalhoFinal.Pages.Generos
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly Dweb_TrabalhoFinal.Data.ApplicationDbContext _context;
 
-        public DetailsModel(Dweb_TrabalhoFinal.Data.ApplicationDbContext context)
+        public DeleteModel(Dweb_TrabalhoFinal.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
         public Genero Genero { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -38,6 +39,24 @@ namespace Dweb_TrabalhoFinal.Pages.Genero
             }
 
             return NotFound();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var genero = await _context.Generos.FindAsync(id);
+            if (genero != null)
+            {
+                Genero = genero;
+                _context.Generos.Remove(Genero);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

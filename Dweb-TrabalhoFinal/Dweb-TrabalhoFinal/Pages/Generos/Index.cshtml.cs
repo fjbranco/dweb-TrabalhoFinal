@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Dweb_TrabalhoFinal.Data;
 using ModeloDados.Models;
 
-namespace Dweb_TrabalhoFinal.Pages.Genero
+namespace Dweb_TrabalhoFinal.Pages.Generos
 {
     public class IndexModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace Dweb_TrabalhoFinal.Pages.Genero
             _context = context;
         }
 
-        public IList<ModeloDados.Models.Genero> Genero { get; set; } = default!;
+        public IList<Genero> Genero { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
