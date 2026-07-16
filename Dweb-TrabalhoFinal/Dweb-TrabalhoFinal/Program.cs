@@ -73,6 +73,8 @@ builder.Services.AddAuthentication(options => { })
 // configuração do JWT
 builder.Services.AddScoped<Dweb_TrabalhoFinal.Tools.TokenService>();
 
+builder.Services.AddRazorPages();
+
 
 var app = builder.Build();
 
