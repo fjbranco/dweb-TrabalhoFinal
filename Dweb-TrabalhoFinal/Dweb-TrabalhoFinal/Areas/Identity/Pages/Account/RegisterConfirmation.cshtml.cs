@@ -10,17 +10,17 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Dweb-TrabalhoFinal.Data;
+using Dweb_TrabalhoFinal.Data;
 
-namespace Dweb-TrabalhoFinal.Areas.Identity.Pages.Account;
+namespace Dweb_TrabalhoFinal.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
 public class RegisterConfirmationModel : PageModel
 {
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<IdentityUser> _userManager;
     private readonly IEmailSender _sender;
 
-    public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender sender)
+    public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
     {
         _userManager = userManager;
         _sender = sender;
