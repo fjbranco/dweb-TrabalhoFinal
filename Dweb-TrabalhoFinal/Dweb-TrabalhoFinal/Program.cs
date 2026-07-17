@@ -10,6 +10,7 @@ using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
+using Dweb-TrabalhoFinal.Data;
 
 // using Microsoft.AspNetCore.Authentication.JwtBearer;
 
