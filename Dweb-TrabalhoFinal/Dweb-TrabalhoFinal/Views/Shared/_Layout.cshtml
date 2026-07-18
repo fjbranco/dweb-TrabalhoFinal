@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <!--<title>@ViewData["Title"] - CineTickets</title>-->
+    <title>@ViewData["Title"] - CineTickets</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -21,24 +20,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <!-- LINKS PÚBLICOS: Qualquer utilizador comum ou visitante consegue ver -->
+                        <!-- LINKS PÚBLICOS (Visíveis para TODOS) -->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a>
-<<<<<<< HEAD
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sessoes" asp-action="Index">Sessões</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Salas" asp-action="Index">Salas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre este site</a>
-=======
->>>>>>> Razor-pages-clientes
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Sessoes" asp-action="Index">Sessões</a>
@@ -47,7 +34,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre este site</a>
                         </li>
 
-                        <!-- MENUS DE GESTÃO: Escondidos do utilizador comum. Apenas o Admin os vê -->
+                        <!-- LINKS DE GESTÃO (Apenas visíveis para o ADMIN logado) -->
                         @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
