@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-// Configuração única da Base de Dados conectada ao Azure
+// Configuraï¿½ï¿½o ï¿½nica da Base de Dados conectada ao Azure
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer("Server=tcp:cineticket-server.database.windows.net,1433;Initial Catalog=cineticket-database;Persist Security Info=False;User ID=cineticket-server-admin;Password=mxmv$OeK0bkJap1$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen(c => {
     {
         Title = "API de Venda de Bilhetes Online",
         Version = "v1",
-        Description = "API para gestão de filmes"
+        Description = "API para gestï¿½o de filmes"
     });
 });
 
@@ -68,7 +68,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
 
-    // Usar os métodos de seed originais do teu projeto
+    // Usar os mï¿½todos de seed originais do teu projeto
     app.UseItToSeedSqlServer();
 
     // iniciar o 'middleware' do Swagger
@@ -98,7 +98,7 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 // =================================================================================================
-// ALTERAÇÃO 2: Criação automática da Role "Admin" e do utilizador Admin se não existirem
+// ALTERAï¿½ï¿½O 2: Criaï¿½ï¿½o automï¿½tica da Role "Admin" e do utilizador Admin se nï¿½o existirem
 // =================================================================================================
 using (var scope = app.Services.CreateScope())
 {
@@ -108,13 +108,13 @@ using (var scope = app.Services.CreateScope())
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
 
-        // 1. Criar o perfil de Admin se ele não existir
+        // 1. Criar o perfil de Admin se ele nï¿½o existir
         if (!await roleManager.RoleExistsAsync("Admin"))
         {
             await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
 
-        // 2. Criar o utilizador Administrador padrão
+        // 2. Criar o utilizador Administrador padrï¿½o
         var adminEmail = "admin@cinema.pt";
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
@@ -127,12 +127,12 @@ using (var scope = app.Services.CreateScope())
                 EmailConfirmed = true
             };
 
-            // Criar com uma senha forte padrão
+            // Criar com uma senha forte padrï¿½o
             var result = await userManager.CreateAsync(newAdmin, "Admin123!");
 
             if (result.Succeeded)
             {
-                // Vincula esta conta especificamente à Role Admin
+                // Vincula esta conta especificamente ï¿½ Role Admin
                 await userManager.AddToRoleAsync(newAdmin, "Admin");
             }
         }
