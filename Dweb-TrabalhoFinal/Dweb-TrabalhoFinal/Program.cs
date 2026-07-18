@@ -15,17 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+// Configuração única da Base de Dados conectada ao Azure
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-<<<<<<< HEAD
     options.UseSqlServer("Server=tcp:cineticket-server.database.windows.net,1433;Initial Catalog=cineticket-database;Persist Security Info=False;User ID=cineticket-server-admin;Password=mxmv$OeK0bkJap1$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-=======
 
->>>>>>> Razor-pages-clientes
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// =================================================================================================
-// ALTERAÇÃO 1: Adicionado .AddRoles<IdentityRole>() e alterado RequireConfirmedAccount para false
-// =================================================================================================
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>() // <-- ATIVA O SUPORTE A PERFIS (ADMIN/CLIENTE)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -94,7 +89,6 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapControllers();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
