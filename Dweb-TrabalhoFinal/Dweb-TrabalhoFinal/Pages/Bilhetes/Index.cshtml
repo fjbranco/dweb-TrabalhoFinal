@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Index - Controlo de Vendas</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -17,44 +17,35 @@
                 @Html.DisplayNameFor(model => model.Bilhete[0].DataCompra)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Bilhete[0].SessaoFK)
+                Sessão / Filme
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Bilhete[0].SessaoBilhete)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bilhete[0].ClienteFK)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bilhete[0].ClienteBilhete)
+                Cliente
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Bilhete) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.DataCompra)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.SessaoFK)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.SessaoBilhete)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.ClienteFK)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.ClienteBilhete)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Bilhete)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCompra)
+                </td>
+                <td>
+                    <!-- Mostra os dados da sessão. -->
+                    @Html.DisplayFor(modelItem => item.SessaoBilhete.Id) (Sessão)
+                </td>
+                <td>
+                    <!-- Mostra o  cliente que efetuou a  compra -->
+                    @Html.DisplayFor(modelItem => item.ClienteBilhete.Email)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

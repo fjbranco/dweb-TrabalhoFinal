@@ -1,0 +1,67 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using System;
+using System.Linq;
+using Dweb_TrabalhoFinal.Models; // Para ele reconhecer a classe Bilhete e sessao
+
+namespace Dweb_TrabalhoFinal.Pages.Bilhetes
+{
+[Authorize] // Garante que o utilizador tem de estar logado
+public class ComprarModel : PageModel
+{
+private readonly ApplicationDbContext _context;
+private readonly UserManager<IdentityUser>
+_userManager;
+
+public ComprarModel(ApplicationDbContext context, UserManager<IdentityUser>
+userManager)
+{
+_context = context;
+_userManager = userManager;
+}
+
+public async Task<IActionResult>
+OnGetAsync(int? sessaoId)
+{
+if (sessaoId == null)
+{
+return NotFound();
+}
+
+// 1. Procurar a sessão na BD
+var sessao = await _context.Sessoes.FindAsync(sessaoId);
+if (sessao == null)
+{
+return NotFound();
+}
+
+// 2. Obter o utilizador que está ligado no browser
+var user = await _userManager.GetUserAsync(User);
+
+// 3. Procurar o Cliente associado a esse email
+var cliente = _context.Clientes.FirstOrDefault(c => c.Email == user.Email);
+if (cliente == null)
+{
+return BadRequest("Perfil de cliente não encontrado.");
+}
+
+// 4. Criar o registo do Bilhete automaticamente
+var novoBilhete = new Bilhete
+{
+DataCompra = DateTime.Now,
+SessaoFK = sessao.Id,   // Mapeia para a sessão escolhida
+ClienteFK = cliente.Id  // Mapeia para o cliente logado
+};
+
+// 5. Guardar as alterações na Base de Dados
+_context.Bilhetes.Add(novoBilhete);
+await _context.SaveChangesAsync();
+
+// 6. Redirecionar o utilizador para a página onde vê os seus bilhetes
+return RedirectToPage("./Index");
+}
+}
+}
