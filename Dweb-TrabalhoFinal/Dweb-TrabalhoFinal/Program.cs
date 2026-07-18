@@ -4,25 +4,28 @@ using Dweb_TrabalhoFinal.Tools;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-// using Microsoft.IdentityModel.Protocols.WSIdentity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
 
-// using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+// =================================================================================================
+// ALTERA«√O 1: Adicionado .AddRoles<IdentityRole>() e alterado RequireConfirmedAccount para false
+// =================================================================================================
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>() // <-- ATIVA O SUPORTE A PERFIS (ADMIN/CLIENTE)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSwaggerGen(c => {
@@ -30,35 +33,22 @@ builder.Services.AddSwaggerGen(c => {
     {
         Title = "API de Venda de Bilhetes Online",
         Version = "v1",
-        Description = "API para gest√£o de filmes"
+        Description = "API para gest„o de filmes"
     });
-
-    /*  // Caminho para o XML gerado
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory,xmlFile);
-        c.IncludeXmlComments(xmlPath);
-    */
-
 });
 
-// *******************************************************************
-// Instalar o package
-// Microsoft.AspNetCore.Authentication.JwtBearer
-//
-// using Microsoft.IdentityModel.Tokens;
-// *******************************************************************
 // JWT Settings
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
-// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthentication(options => { })
    .AddCookie("Cookies", options => {
        options.LoginPath = "/Identity/Account/Login";
        options.AccessDeniedPath = "/Identity/Account/AccessDenied";
    })
    .AddJwtBearer("Bearer", options => {
-       options.TokenValidationParameters = new TokenValidationParameters {
+       options.TokenValidationParameters = new TokenValidationParameters
+       {
            ValidateIssuer = true,
            ValidateAudience = true,
            ValidateLifetime = true,
@@ -69,12 +59,8 @@ builder.Services.AddAuthentication(options => { })
        };
    });
 
-
-// configura√ß√£o do JWT
 builder.Services.AddScoped<Dweb_TrabalhoFinal.Tools.TokenService>();
-
 builder.Services.AddRazorPages();
-
 
 var app = builder.Build();
 
@@ -83,7 +69,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
 
-    // Usar os m√©todos de seed
+    // Usar os mÈtodos de seed originais do teu projeto
     app.UseItToSeedSqlServer();
 
     // iniciar o 'middleware' do Swagger
@@ -93,20 +79,17 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication(); // Adiciona a autentica√ß√£o ao pipeline de middleware
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
-
-app.MapControllers();   // Mapear os controladores da API
+app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",
@@ -115,5 +98,51 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+// =================================================================================================
+// ALTERA«√O 2: CriaÁ„o autom·tica da Role "Admin" e do utilizador Admin se n„o existirem
+// =================================================================================================
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+        // 1. Criar o perfil de Admin se ele n„o existir
+        if (!await roleManager.RoleExistsAsync("Admin"))
+        {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
+
+        // 2. Criar o utilizador Administrador padr„o
+        var adminEmail = "admin@cinema.pt";
+        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+        if (adminUser == null)
+        {
+            var newAdmin = new IdentityUser
+            {
+                UserName = adminEmail,
+                Email = adminEmail,
+                EmailConfirmed = true
+            };
+
+            // Criar com uma senha forte padr„o
+            var result = await userManager.CreateAsync(newAdmin, "Admin123!");
+
+            if (result.Succeeded)
+            {
+                // Vincula esta conta especificamente ‡ Role Admin
+                await userManager.AddToRoleAsync(newAdmin, "Admin");
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erro ao rodar o Seed de Roles: {ex.Message}");
+    }
+}
 
 app.Run();
